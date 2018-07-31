@@ -1,0 +1,115 @@
+
+		<!-- SearchBox  -->
+		<%= render 'temp/searchbox'%>
+		<!-- end SearchBox  -->
+
+		<!-- category -->
+		<%= render 'temp/cate'%>
+		<!-- end category -->
+
+		<!-- drill category -->
+		<%= render 'temp/drillcate'%>
+		<!-- end drill category -->
+
+		<!-- mainrecommendCard -->
+		<%= render 'temp/mainrecommendCard'%>>
+		<!-- end mainrecommendCard -->
+
+		<!-- subrecommendCard -->
+		<div id="sub_hos">
+
+		</div>
+		<!-- <%= render 'temp/subrecommendCard'%> -->
+		<!-- end subrecommendCard -->
+
+
+			<script>
+			//alert("<%=@client_location%>")
+
+
+
+			var rootpage=true;
+			var $new = $('#drillcate');
+			$new.hide('#drillcate');
+
+			var check =true;
+			$('#category1').click(function(e){
+				e.preventDefault();
+				if (check){
+					$('#category1').after($new);
+					$new.show('slow');
+					check=false;
+				}else{
+						$new.hide('show')
+						check=true;
+				}
+			});
+
+			$('#category2').click(function(e){
+				e.preventDefault();
+				if (check){
+					$('#category2').after($new);
+					$new.show('slow');
+					check=false;
+				}else{
+						$new.hide('show')
+						check=true;
+				}
+			});
+
+
+
+			//$("#sub_rec_card").hide();
+			$(document).ready(function(){
+				$("#main_rec_card").show();
+				$("#sub_hos").show();
+
+			})
+
+
+
+			$("#main_search").click(function(e){
+				e.preventDefault();
+				var a = $('input[name="location"]').val()
+				if (a == ""){
+					alert("위치를 먼저 지정해 주세요!")
+				}else{
+					$("#main_rec_card .row").html("")
+					$("#sub_hos").html("")
+
+					$.ajax({
+							 url:"temp/search_hospital",
+							 type:'POST',
+							 data:{query: $('input[name="query"]').val(),
+										 authenticity_token: $('[name="csrf-token"]').attr('content'),
+										 location: $('input[name="location"]').val()
+							 },
+							 dataType: 'script',
+							 success: function(){
+
+								 $('input[name="query"]').val("");
+								 // $("#main_rec_card").show("slow");
+								 // $("#sub_rec_card").show("slow");
+								 var offset = $("#main_card_offset").offset();
+								 $("html,body").animate({
+								 scrollTop:offset.top
+								 },"slow");
+							 },
+							 error: function(){
+								 alert('병원이 존재하지 않습니다.');
+								$('input[name="query"]').val("");
+							 }
+						 })
+				}
+
+			})
+
+
+
+			</script>
+
+			<script>
+
+
+
+			</script>

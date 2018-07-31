@@ -1,0 +1,51 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or any plugin's vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any styles
+ * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
+ * file per style scope.
+ *
+ */
+//index
+@import 'bootstrap.min';
+@import 'responsive';
+@import "themify-icons";
+@import "font-awesome";
+@import "elegant";
+@import "shortcodes";
+@import "animate.min";
+@import "owl.carousel";
+@import url('https://fonts.googleapis.com/css?family=Montserrat:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i|Playfair+Display:400,400i,700,700i,900,900i');
+@import 'style';
+
+.department {
+  font-size: 18px;
+  font-weight: 400;
+  display: block;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+//0721 지훈수정
+//.container-fluid 패딩 준거 전부 지워!
+[name="cate"]{
+  padding-top: 30px;
+}
+.sticky_header {
+  position: fixed;
+  width: 100%;
+}
+//end 0721
+.img-circular{
+ width: 60px;
+ height: 60px;
+ background-size: cover;
+ border-radius: 30px;
+ -webkit-border-radius: 30px;
+ -moz-border-radius: 30px;
+}

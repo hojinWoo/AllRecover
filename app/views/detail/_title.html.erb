@@ -1,0 +1,261 @@
+<style>
+.badge{
+  background-color: #08c;
+}
+</style>
+
+<section class="flat-title">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8">
+        <div class="title-left">
+          <div class="queue">
+            <!-- <i class="fa fa-star" aria-hidden="true"></i>
+            <i class="fa fa-star" aria-hidden="true"></i>
+            <i class="fa fa-star" aria-hidden="true"></i>
+            <i class="fa fa-star" aria-hidden="true"></i>
+            <i class="fa fa-star-half-o" aria-hidden="true"></i> -->
+            <span class="badge asmgrd11">항생제처방율 : <%=@hospeval.asmgrd11%>등급</span>
+            <span class="badge asmgrd12">주사제처방율 : <%=@hospeval.asmgrd12%>등급</span>
+            <span class="badge asmgrd13">약품품목수 : <%=@hospeval.asmgrd13%>등급</span>
+          </div><!-- /.queue -->
+          <div class="box-title">
+            <span>Ad</span><a href="#" title=""><%=@hospital.yadmnm%></a><i class="fa fa-check-circle" aria-hidden="true"></i>
+          </div><!-- /.box-title -->
+          <ul class="box-address">
+            <% if @hospital.addr %>
+            <li class="address"><i class="fa fa-map-marker" aria-hidden="true"></i><%=@hospital.addr%></li>
+            <% end %>
+            <% if @hospital.telno %>
+            <li class="phone"><i class="fa fa-phone" aria-hidden="true"></i><%=@hospital.telno%></li>
+            <% end %>
+            <% if @hospital.hospurl!="null" %>
+            <li><i class="fa fa-globe" aria-hidden="true"></i><a href="<%=@hospital.hospurl%>" title=""><%=@hospital.hospurl%></a></li>
+            <% end %>
+          </ul><!-- /.box-address -->
+        </div><!-- /.title-left -->
+      </div><!-- /.col-md-8 -->
+      <div class="col-md-4">
+          <div class="box pdmap style1" id="flat-map-4">
+                  <div class="flat-maps" data-address="<%=@hospital.addr%>" data-image="images/icon/map.png" data-name="Map"></div>
+                  <div class="gm-map">
+                      <div class="map-4"></div>
+                  </div>
+          </div><!-- /#flat-map -->
+      </div><!-- /.col-md-4 -->
+    </div><!-- /.row -->
+  </div><!-- /.container -->
+</section><!-- /.flat-title -->
+
+<script>
+
+var googleMap = function() {
+    var data = JSON.parse('[{"address":"<%=@hospital.addr%>","content":"","status":"live"}]');
+    console.log("123123123123")
+    var lat = <%=@hospital.ypos%>;
+    var lon = <%=@hospital.xpos%>;
+    // Gmap Defaults
+    $('.map').gmap3({
+        map:{
+            options:{
+                center:[lat, lon],
+                mapTypeId: 'themesflat_style',
+                mapTypeControlOptions: {
+                        mapTypeIds: ['themesflat_style', google.maps.MapTypeId.SATELLITE, google.maps.MapTypeId.HYBRID]},
+                zoom: 14
+            },
+            navigationControl: true,
+           scrollwheel: false,
+           streetViewControl: true
+        }
+    });
+
+    $('.map-4').gmap3({
+        map:{
+            options:{
+                center:[lat, lon],
+                mapTypeId: 'themesflat_style',
+                mapTypeControlOptions: {
+                        mapTypeIds: ['themesflat_style', google.maps.MapTypeId.SATELLITE, google.maps.MapTypeId.HYBRID]},
+                zoom: 14
+            }
+        }
+    });
+
+    // Json Loop
+    $.each(data, function(key, val) {
+        $('.map-4').gmap3({
+            marker:{
+
+                values:[{
+                    address:val.address,
+                    options:{icon: "/assets/icon/map.png"},
+                    events: {
+                        mouseover: function() {
+                            $(this).gmap3({
+                                overlay:{
+                                    address:val.address,
+                                    options:{
+                                        content:  "<div class='infobox style2'><div class='img-box'></div><div class='text'><h4><%=@hospital.yadmnm%></h4><p><%=@hospital.addr%></p></div><div class='clearfix'></div></div>",
+                                        offset:{
+                                            y:-200,
+                                            x:-115
+                                        }
+                                    }
+                                }
+                            });
+                        },
+                        mouseout: function(){
+                        $('.infobox').each(function() {
+                            $(this).remove();
+                        });
+                        }
+                    }
+                }]
+            },
+            styledmaptype:{
+                id: "themesflat_style",
+                options:{
+                    name: "지도"
+                },
+                styles:[
+                    {
+                        "featureType": "administrative",
+                        "elementType": "labels.text.fill",
+                        "stylers": [
+                            {
+                                "color": "#ffffff"
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "landscape",
+                        "elementType": "all",
+                        "stylers": [
+                            {
+                                "color": "#efebe2"
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "road.arterial",
+                        "elementType": "labels.text.fill",
+                        "stylers": [
+                            {
+                                "color": "#2c3e50"
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "poi",
+                        "elementType": "all",
+                        "stylers": [
+                            {
+                                "visibility": "off"
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "road",
+                        "elementType": "all",
+                        "stylers": [
+                            {
+                                "saturation": -100
+                            },
+                            {
+                                "lightness": 45
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "road.highway",
+                        "elementType": "all",
+                        "stylers": [
+                            {
+                                "visibility": "simplified"
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "road.arterial",
+                        "elementType": "labels.icon",
+                        "stylers": [
+                            {
+                                "visibility": "off"
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "road.local",
+                        "elementType": "geometry.fill",
+                        "stylers": [
+                            {
+                                "color": "#ffffff"
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "road.local",
+                        "elementType": "labels.text.fill",
+                        "stylers": [
+                            {
+                                "color": "#2c3e50"
+                            }
+                        ]
+                    },
+                     {
+                        "featureType": "administrative.locality",
+                        "elementType": "labels.text.fill",
+                        "stylers": [
+                            {
+                                "visibility": "off"
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "poi.park",
+                        "elementType": "geometry.fill",
+                        "stylers": [
+                            {
+                                "color": "#bad294"
+                            },
+                            {
+                                "visibility": "on"
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "transit",
+                        "elementType": "all",
+                        "stylers": [
+                            {
+                                "visibility": "off"
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "water",
+                        "elementType": "all",
+                        "stylers": [
+                            {
+                                "color": "#a5d7e0"
+                            },
+                            {
+                                "visibility": "on"
+                            }
+                        ]
+                    }
+                ]
+            }
+        });
+    });
+
+    // Function Clear Markers
+    function gmap_clear_markers() {
+        $('.infobox').each(function() {
+            $(this).slideToggle(400).remove();
+        });
+    }
+}; // Google Mapc
+googleMap();
+</script>

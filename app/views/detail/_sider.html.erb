@@ -1,0 +1,156 @@
+<section class="flat-row flat-explore-detail">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8">
+        <% unless @top5.nil? %>
+        <div class="text-box">
+          <h3>전문 진료 질환 Top 5</h3>
+          <div class="box contact-box">
+            <h4>1위 <%=@top5["mfrnIntrsIlnsCdNm1"]%></h4>
+            <h4>2위 <%=@top5["mfrnIntrsIlnsCdNm2"]%></h4>
+            <h4>3위 <%=@top5["mfrnIntrsIlnsCdNm3"]%></h4>
+            <h4>4위 <%=@top5["mfrnIntrsIlnsCdNm4"]%></h4>
+            <h4>5위 <%=@top5["mfrnIntrsIlnsCdNm5"]%></h4>
+					 </div>
+        </div>
+        <%end%>
+
+        <div class="clearfix"></div>
+
+        <div class="amenities">
+
+
+          <% unless @getFacilityInfo.nil? %>
+          <ul class="quater">
+            <h3>시설정보</h3>
+            <li><span class="ti-check-box"></span>응급실 : <%=@getFacilityInfo["emymCnt"]%></li>
+            <li><span class="ti-check-box"></span>수술실 : <%=@getFacilityInfo["soprmCnt"]%></li>
+            <li><span class="ti-check-box"></span>상급 입원실 : <%=@getFacilityInfo["hghrSickbdCnt"]%></li>
+            <li><span class="ti-check-box"></span>일반 입원실 : <%=@getFacilityInfo["stdSickbdCnt"]%></li>
+            <li><span class="ti-check-box"></span>성인/소아 중환자실 : <%=@getFacilityInfo["aduChldSprmCnt"]%></li>
+            <li><span class="ti-check-box"></span>신생아 중환자실 : <%=@getFacilityInfo["nbySprmCnt"]%></li>
+            <li><span class="ti-check-box"></span>물리치료실 : <%=@getFacilityInfo["ptrmCnt"]%></li>
+            <li><span class="ti-check-box"></span>분만실 : <%=@getFacilityInfo["partumCnt"]%></li>
+          </ul>
+          <%end%>
+
+
+          <% unless @getSpclMdlrtInfoList.nil? %>
+          <ul class="quater">
+            <h3>특수진료</h3>
+            <% if @getSpclMdlrtInfoList.kind_of?(Array)%>
+              <% @getSpclMdlrtInfoList.each do |val|%>
+                <li><span class="ti-check-box"></span><%=val["srchCdNm"]%></li>
+              <%end%>
+            <%elsif @getSpclMdlrtInfoList.kind_of?(Hash)%>
+              <li><span class="ti-check-box"></span><%=@getSpclMdlrtInfoList["srchCdNm"]%></li>
+            <%end%>
+          </ul>
+          <%end%>
+
+          <% unless @getMedicalEquipmentInfoList.nil? %>
+            <ul class="quater">
+              <h3>의료장비</h3>
+              <% if @getMedicalEquipmentInfoList.kind_of?(Array)%>
+                <% @getMedicalEquipmentInfoList.each do |val|%>
+                  <li><span class="ti-check-box"></span><%=val["oftCdNm"]%> :<%=val["oftCnt"]%>개</li>
+                <%end%>
+              <%elsif @getMedicalEquipmentInfoList.kind_of?(Hash)%>
+                <li><span class="ti-check-box"></span><%=@getMedicalEquipmentInfoList["oftCdNm"]%> :<%=@getMedicalEquipmentInfoList["oftCnt"]%>개</li>
+              <%end%>
+            </ul>
+          <%end%>
+          <div class="clearfix"></div>
+        </div>
+
+        <% unless @getTransportInfoList.nil? %>
+          <div class="text-box">
+            <h3>교통정보</h3>
+            <div class="box contact-box">
+              <% if @getTransportInfoList.kind_of?(Array)%>
+                  <% @getTransportInfoList.each do |val|%>
+                    <% if val["trafNm"]== "지하철" %>
+                      <h4><%=val["trafNm"]%> <%=val["lineNo"]%> <%=val["arivPlc"]%> <%=val["dist"]%></h4>
+                    <% elsif val["trafNm"]== "시내버스"%>
+                      <h4><%=val["trafNm"]%> <%=val["lineNo"]%> <%=val["arivPlc"]%></h4>
+                    <%end%>
+                  <%end%>
+              <%elsif @getTransportInfoList.kind_of?(Hash)%>
+                <% if @getTransportInfoList["trafNm"]=="지하철" %>
+                  <h4><%=@getTransportInfoList["trafNm"]%> <%=@getTransportInfoList["lineNo"]%> <%=@getTransportInfoList["arivPlc"]%> <%=@getTransportInfoList["dist"]%></h4>
+                <% elsif @getTransportInfoList["trafNm"]=="시내버스"%>
+                  <h4><%=@getTransportInfoList["trafNm"]%> <%=@getTransportInfoList["lineNo"]%> <%=@getTransportInfoList["arivPlc"]%></h4>
+                <%end%>
+              <%end%>
+  					 </div>
+          </div>
+        <%end%>
+      </div><!-- /.col-md-8 -->
+
+<!-- slider -->
+      <div class="col-md-4">
+        <div class="sidebar">
+
+            <!-- <#%= render 'chat/chat'%> -->
+            <% unless @timetable.nil? %>
+            <div class="box open">
+                   <h4><i class="fa fa-clock-o" aria-hidden="true"></i> 병원 시간표</h4>
+                   <div class="box-desc">
+                      <h4><b>평일</b></h4>
+
+                      <p><b>월</b>    <%=@timetable["trmtMonStart"] %> - <%=@timetable["trmtMonEnd"]%></p>
+                 <p><b>화</b>    <%=@timetable["trmtTueStart"] %> - <%=@timetable["trmtTueEnd"]%></p>
+                 <p><b>목</b>    <%=@timetable["trmtThuStart"] %> - <%=@timetable["trmtThuEnd"]%></p>
+                 <p><b>수</b>    <%=@timetable["trmtWedStart"] %> - <%=@timetable["trmtWedEnd"]%></p>
+                 <p><b>금</b>    <%=@timetable["trmtFriStart"] %> - <%=@timetable["trmtFriEnd"]%></p>
+                 <p><b>점심시간</b> <%=@timetable["lunchWeek"]%></p>
+                 <% unless @timetable["trmtSatStart"].nil?%>
+                   <hr/>
+                     <h4><b>휴일</b></h4>
+                          <p><b>토</b>    <%=@timetable["trmtSatStart"] %> - <%=@timetable["trmtSatEnd"]%><span>휴일 진료 !</span></p>
+                     <% unless @timetable["lunchSat"].nil?%>
+                     <p><b>점심시간</b> <%=@timetable["lunchSat"]%></p>
+                     <%end%>
+                   <%end%>
+
+                   </div>
+                 </div>
+            <% end%>
+            <% unless @getMdlrtSbjectInfoList.nil? %>
+              <div class="box open">
+                <h4>진료과목 : 의사 수</h4>
+                <hr/>
+                   <ul>
+                      <% if @getMdlrtSbjectInfoList.kind_of?(Array)%>
+                          <% @getMdlrtSbjectInfoList.each do |val|%>
+                            <li><%= val["dgsbjtCdNm"]%> : <%=val["dgsbjtPrSdrCnt"]%>명</li>
+                          <%end%>
+                      <%elsif @getMdlrtSbjectInfoList.kind_of?(Hash)%>
+                        <li><%= @getMdlrtSbjectInfoList["dgsbjtCdNm"]%> : <%=@getMdlrtSbjectInfoList["dgsbjtPrSdrCnt"]%>명</li>
+                      <%end%>
+                   </ul>
+              </div>
+            <%end%>
+        </div>
+      </div><!-- /.col-md-4 -->
+    </div><!-- /.row -->
+  </div><!-- /.container -->
+</section><!-- /.flat-explore-detail <-->
+
+
+
+<section class="flat-row flat-explore-detail">
+         <div class="container">
+            <div class="row">
+               <div class="col-md-8">
+            <%= render 'detail/review'%>
+            <%= render 'detail/writereview'%>
+               </div><!-- /.col-md-8 -->
+               <div class="col-md-4">
+                  <div class="sidebar">
+
+                  </div>
+               </div><!-- /.col-md-4 -->
+            </div><!-- /.row -->
+         </div><!-- /.container -->
+      </section><!-- /.flat-explore-detail <-->
